@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "gpio.h": "c",
+        "utils.h": "c",
+        "base.h": "c"
+    }
+}

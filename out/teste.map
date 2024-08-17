@@ -1,0 +1,182 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00008000                        . = 0x8000
+
+.text           0x00008000      0x998
+ out/boot.o(.text)
+ .text          0x00008000       0xec out/boot.o
+                0x00008000                _start
+                0x00008084                enable_irq
+                0x000080ac                proc_hang
+                0x000080b0                panic
+ *(.text)
+ .text          0x000080ec       0x10 out/mm.o
+                0x000080ec                memzero
+ .text          0x000080fc       0x1c out/utils.o
+                0x000080fc                put32
+                0x00008104                get32
+                0x0000810c                delay
+ *fill*         0x00008118       0xe8 
+ .text          0x00008200      0x1ac out/user.o
+                0x00008318                main
+ .text          0x000083ac        0x0 out/gpio.o
+ .text          0x000083ac      0x220 out/mini_uart.o
+                0x000083ac                uart_send
+                0x00008404                uart_recv
+                0x0000844c                uart_send_string
+                0x000084b4                uart_init
+ .text          0x000085cc      0x3cc out/monitor.o
+                0x000085cc                memset
+                0x00008630                monitored_gpio_set
+                0x00008744                monitor_init
+                0x00008758                monitor_get_states
+                0x000088d8                monitor_step
+
+.glue_7         0x00008998        0x0
+ .glue_7        0x00008998        0x0 linker stubs
+
+.glue_7t        0x00008998        0x0
+ .glue_7t       0x00008998        0x0 linker stubs
+
+.vfp11_veneer   0x00008998        0x0
+ .vfp11_veneer  0x00008998        0x0 linker stubs
+
+.v4_bx          0x00008998        0x0
+ .v4_bx         0x00008998        0x0 linker stubs
+
+.iplt           0x00008998        0x0
+ .iplt          0x00008998        0x0 out/boot.o
+
+.rel.dyn        0x00008998        0x0
+ .rel.iplt      0x00008998        0x0 out/boot.o
+                0x00008998                        . = ALIGN (0x4)
+
+.data           0x00008998       0x1e
+ *(.data)
+ .data          0x00008998        0x0 out/boot.o
+ .data          0x00008998        0x0 out/mm.o
+ .data          0x00008998        0x0 out/utils.o
+ .data          0x00008998        0x0 out/user.o
+ .data          0x00008998        0x0 out/gpio.o
+ .data          0x00008998        0x0 out/mini_uart.o
+ .data          0x00008998       0x1e out/monitor.o
+
+.igot.plt       0x000089b8        0x0
+ .igot.plt      0x000089b8        0x0 out/boot.o
+                0x000089b8                        . = ALIGN (0x4)
+                0x000089b8                        bss_begin = .
+
+.bss            0x000089b8        0x0
+ *(.bss*)
+ .bss           0x000089b8        0x0 out/boot.o
+ .bss           0x000089b8        0x0 out/mm.o
+ .bss           0x000089b8        0x0 out/utils.o
+ .bss           0x000089b8        0x0 out/user.o
+ .bss           0x000089b8        0x0 out/gpio.o
+ .bss           0x000089b8        0x0 out/mini_uart.o
+ .bss           0x000089b8        0x0 out/monitor.o
+                0x000089b8                        bss_end = .
+                0x000089b8                        . = ALIGN (0x8)
+                0x000099b8                        . = (. + 0x1000)
+                0x000099b8                        stack_usr_0 = .
+                0x000099b8                        . = ALIGN (0x4)
+                0x0000a9b8                        . = (. + 0x1000)
+                0x0000a9b8                        stack_usr_1 = .
+LOAD out/boot.o
+LOAD out/mm.o
+LOAD out/utils.o
+LOAD out/user.o
+LOAD out/gpio.o
+LOAD out/mini_uart.o
+LOAD out/monitor.o
+LOAD /opt/gcc-arm-none-eabi/lib/gcc/arm-none-eabi/13.2.1/libgcc.a
+OUTPUT(out/teste.elf elf32-littlearm)
+LOAD linker stubs
+
+.ARM.attributes
+                0x00000000       0x2b
+ .ARM.attributes
+                0x00000000       0x14 out/boot.o
+ .ARM.attributes
+                0x00000014       0x16 out/mm.o
+ .ARM.attributes
+                0x0000002a       0x16 out/utils.o
+ .ARM.attributes
+                0x00000040       0x16 out/user.o
+ .ARM.attributes
+                0x00000056       0x2f out/gpio.o
+ .ARM.attributes
+                0x00000085       0x2f out/mini_uart.o
+ .ARM.attributes
+                0x000000b4       0x2f out/monitor.o
+
+.comment        0x00000000       0x44
+ .comment       0x00000000       0x44 out/gpio.o
+                                 0x45 (size before relaxing)
+ .comment       0x00000044       0x45 out/mini_uart.o
+ .comment       0x00000044       0x45 out/monitor.o
+
+.debug_line     0x00000000      0x424
+ .debug_line    0x00000000       0x76 out/boot.o
+ .debug_line    0x00000076       0x36 out/mm.o
+ .debug_line    0x000000ac       0x3c out/utils.o
+ .debug_line    0x000000e8       0x77 out/user.o
+ .debug_line    0x0000015f       0x2b out/gpio.o
+ .debug_line    0x0000018a       0xd1 out/mini_uart.o
+ .debug_line    0x0000025b      0x1c9 out/monitor.o
+
+.debug_info     0x00000000      0x4ed
+ .debug_info    0x00000000       0x26 out/boot.o
+ .debug_info    0x00000026       0x26 out/mm.o
+ .debug_info    0x0000004c       0x26 out/utils.o
+ .debug_info    0x00000072       0x26 out/user.o
+ .debug_info    0x00000098       0x65 out/gpio.o
+ .debug_info    0x000000fd      0x148 out/mini_uart.o
+ .debug_info    0x00000245      0x2a8 out/monitor.o
+
+.debug_abbrev   0x00000000      0x2f0
+ .debug_abbrev  0x00000000       0x14 out/boot.o
+ .debug_abbrev  0x00000014       0x14 out/mm.o
+ .debug_abbrev  0x00000028       0x14 out/utils.o
+ .debug_abbrev  0x0000003c       0x14 out/user.o
+ .debug_abbrev  0x00000050       0x26 out/gpio.o
+ .debug_abbrev  0x00000076       0xf6 out/mini_uart.o
+ .debug_abbrev  0x0000016c      0x184 out/monitor.o
+
+.debug_aranges  0x00000000       0xd8
+ .debug_aranges
+                0x00000000       0x20 out/boot.o
+ .debug_aranges
+                0x00000020       0x20 out/mm.o
+ .debug_aranges
+                0x00000040       0x20 out/utils.o
+ .debug_aranges
+                0x00000060       0x20 out/user.o
+ .debug_aranges
+                0x00000080       0x18 out/gpio.o
+ .debug_aranges
+                0x00000098       0x20 out/mini_uart.o
+ .debug_aranges
+                0x000000b8       0x20 out/monitor.o
+
+.debug_str      0x00000000      0x280
+ .debug_str     0x00000000      0x280 out/boot.o
+                                 0x45 (size before relaxing)
+ .debug_str     0x00000280       0x43 out/mm.o
+ .debug_str     0x00000280       0x46 out/utils.o
+ .debug_str     0x00000280       0x45 out/user.o
+ .debug_str     0x00000280      0x130 out/gpio.o
+ .debug_str     0x00000280      0x184 out/mini_uart.o
+ .debug_str     0x00000280      0x22f out/monitor.o
+
+.debug_frame    0x00000000      0x138
+ .debug_frame   0x00000000       0x8c out/mini_uart.o
+ .debug_frame   0x0000008c       0xac out/monitor.o
